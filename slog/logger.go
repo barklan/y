@@ -7,12 +7,14 @@ import (
 	"go.uber.org/zap/zapcore"
 )
 
-type Environment uint8
-
-const (
-	DevEnvironment Environment = iota
-	ProdEnvironment
-)
+// New returns development logger (line-based) if dev == true
+// and prod logger (structured json) otherwise.
+func New(dev bool) (*zap.Logger, error) {
+	if env == "dev" {
+		return Dev()
+	}
+	return Prod()
+}
 
 func Dev() (*zap.Logger, error) {
 	zapConfig := zap.NewDevelopmentConfig()
